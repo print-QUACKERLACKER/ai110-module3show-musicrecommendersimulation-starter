@@ -2,32 +2,20 @@
 
 ## Project Summary
 
-In this project you will build and explain a small music recommender system.
-
-Your goal is to:
-
-- Represent songs and a user "taste profile" as data
-- Design a scoring rule that turns that data into recommendations
-- Evaluate what your system gets right and wrong
-- Reflect on how this mirrors real world AI recommenders
-
-Replace this paragraph with your own summary of what your version does.
-
+This project is a simple content-based music recommender that reads songs from a CSV file and ranks them by how well they match a user’s preferred genre, mood, and energy level
 ---
 
 ## How The System Works
 
-Explain your design in plain language.
+Songs are organized by genre, mood, energy, and acousticness. A user profile stores a favorite genre, a preferred mood, a target energy level, and whether they tend to like acoustic sounds. The recommender gives a score to each song by rewarding strong matches on genre and mood, then adding a bonus for energy closeness and acoustic preference.
 
-Some prompts to answer:
+The recommendation flow from Claude is:
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+1. Load songs from the CSV catalog.
+2. Convert a user profile into a preference dictionary.
+3. Score every song against those preferences.
+4. Sort the songs by score and return the top results.
 
-You can include a simple diagram or bullet list if helpful.
 
 ---
 
@@ -39,84 +27,67 @@ You can include a simple diagram or bullet list if helpful.
 
    ```bash
    python -m venv .venv
-   source .venv/bin/activate      # Mac or Linux
-   .venv\Scripts\activate         # Windows
+   source .venv/bin/activate
+   ```
 
-2. Install dependencies
+2. Install dependencies:
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 3. Run the app:
 
-```bash
-python -m src.main
-```
+   ```bash
+   python -m src.main
+   ```
 
 ### Running Tests
 
-Run the starter tests with:
+Run the test suite with:
 
 ```bash
 pytest
 ```
 
-You can add more tests in `tests/test_recommender.py`.
-
 ---
 
 ## Sample Recommendation Output
 
-Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
+Example output for a user who likes pop, happy songs, and high energy:
 
-```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
-```
+Top recommendations:
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
+Sunrise City - Score: 1.00
+Because: matches your preferred genre pop; matches your preferred mood happy; energy is close to your target (0.80)
+
+Gym Hero - Score: 0.95
+Because: matches your preferred genre pop; mood differs from your preference happy; energy is close to your target (0.80)
+
 
 ---
 
-## Experiments You Tried
+## Experiments I Tried
 
-Use this section to document the experiments you ran. For example:
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+- A pop + happy + high-energy profile favored upbeat songs such as Sunrise City.
+- A chill profile preferred lofi and ambient tracks because the mood match was stronger.
+- Changing the energy target shifted the ranking toward songs with a closer energy value.
 
 ---
 
 ## Limitations and Risks
 
-Summarize some limitations of your recommender.
 
-Examples:
+- It only uses a small number of song features.
+- It does not understand lyrics, artist identity, or listening context.
 
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-
-You will go deeper on this in your model card.
 
 ---
 
 ## Reflection
 
-Read and complete `model_card.md`:
-
-[**Model Card**](model_card.md)
-
-Write 1 to 2 paragraphs here about what you learned:
-
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
+I was mostly confused on the logic of the program, so I had Claude do most of the hand holding. Through the information and instructions generated from my prompt with Claude, I was able to learn of the implementation of music rankings based off the users preferences. 
 
 
 
